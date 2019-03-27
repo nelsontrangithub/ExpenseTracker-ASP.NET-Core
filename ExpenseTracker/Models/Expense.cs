@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpenseTracker.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace ExpenseTracker.Models
 {
-    public class Expenses
+    public class Expense
     {
         [Key]
         public int Id { get; set; }
+        public string UserID { get; set; }
         [Required]
         public string ExpenseName { get; set; }
         [Required]
@@ -23,5 +25,7 @@ namespace ExpenseTracker.Models
         public DateTime ExpenseDate { get; set; } = DateTime.Now;
         [Required]
         public string Category { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

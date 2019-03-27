@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ExpenseTracker.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace ExpenseTracker.Data
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Expense> Expenses { get; set; }
     }
 }
