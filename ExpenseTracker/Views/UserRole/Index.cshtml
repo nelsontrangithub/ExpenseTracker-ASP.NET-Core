@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ExpenseTracker.ViewModels.UserVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <!-- Create a hyperlink to a detail view for a specific user. -->
+            <td>
+                @Html.ActionLink("View Roles", "Detail", new { userName = item.Email })
+            </td>
+            <td>
+                @Html.ActionLink("Delete User", "Delete", new { userName = item.Email })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
