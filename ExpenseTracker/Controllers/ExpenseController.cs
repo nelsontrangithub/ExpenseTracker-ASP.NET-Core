@@ -7,6 +7,7 @@ using ExpenseTracker.Models;
 using ExpenseTracker.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExpenseTracker.Controllers
 {
@@ -47,12 +48,16 @@ namespace ExpenseTracker.Controllers
         // POST: Expense/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Expense expense)
         {
+            ExpenseRepo expRepo = new ExpenseRepo(_db);
+            ViewData["UserID"] = new SelectList(_db.ApplicationUsers, "Id", "Id", expense.UserID);
             try
             {
-                // TODO: Add insert logic here
-
+                if (ModelState.IsValid)
+                {
+                    expRepo.AddExpense(expense);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
