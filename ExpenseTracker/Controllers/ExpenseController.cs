@@ -51,7 +51,7 @@ namespace ExpenseTracker.Controllers
         public ActionResult Create(Expense expense)
         {
             ExpenseRepo expRepo = new ExpenseRepo(_db);
-            ViewData["UserID"] = new SelectList(_db.ApplicationUsers, "Id", "Id", expense.UserID);
+            ViewData["UserID"] = new SelectList(_db.ApplicationUsers, "Id", "Id");
             try
             {
                 if (ModelState.IsValid)
