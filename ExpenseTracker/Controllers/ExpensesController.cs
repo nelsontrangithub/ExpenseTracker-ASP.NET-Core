@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ExpenseTracker.Data;
 using ExpenseTracker.Models;
 using System.Security.Claims;
+using ExpenseTracker.Repositories;
 
 namespace ExpenseTracker.Controllers
 {
@@ -177,7 +178,7 @@ namespace ExpenseTracker.Controllers
 
         public IActionResult DeleteAll()
         {
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                        var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var expenses = _context.Expenses.Where(e => e.UserID == userID).ToList();
             expenses.RemoveAll(e => e.UserID == userID);
             _context.SaveChanges();

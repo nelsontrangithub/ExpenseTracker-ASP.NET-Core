@@ -17,11 +17,11 @@ namespace ExpenseTracker.Repositories
             this.db = db;
         }
 
-        public IEnumerable<Expense> GetAllExpenses()
+        public IEnumerable<Expense> GetAllExpenses(string userID)
         {
             try
             {
-                return db.Expenses.ToList();
+                return db.Expenses.Where(e => e.UserID == userID);
             }
             catch
             {
