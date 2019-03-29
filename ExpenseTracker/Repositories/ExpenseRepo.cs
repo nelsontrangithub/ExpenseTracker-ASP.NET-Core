@@ -38,6 +38,5 @@ namespace ExpenseTracker.Repositories
 
             return catSum;
         }
-
     }
 }
