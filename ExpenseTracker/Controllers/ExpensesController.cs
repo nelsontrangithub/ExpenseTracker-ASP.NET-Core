@@ -29,7 +29,9 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID);
+            //var expenses = _context.Expenses.Where(e => e.UserID == userID);
+            //return View(await expenses.ToListAsync());
+            var expenses = new ExpenseRepo(_context).GetAllExpenses(userID);
             return View(await expenses.ToListAsync());
         }
 

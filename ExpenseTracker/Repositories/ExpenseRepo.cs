@@ -10,78 +10,18 @@ namespace ExpenseTracker.Repositories
 {
     public class ExpenseRepo
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext _context;
 
-        public ExpenseRepo(ApplicationDbContext db)
+        public ExpenseRepo(ApplicationDbContext context)
         {
-            this.db = db;
-        }
-
-        public IEnumerable<Expense> GetAllExpenses(string userID)
-        {
-            try
-            {
-                return db.Expenses.Where(e => e.UserID == userID);
-            }
-            catch
-            {
-                throw;
-            }
+            _context = context;
         }
 
-        //Add      
-        public void AddExpense(Expense expense)
+        public IQueryable<Expense> GetAllExpenses(string userID)
         {
-            try
-            {
-                db.Expenses.Add(expense);
-                db.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
+            var expenses = _context.Expenses.Where(e => e.UserID == userID);
+            return expenses;
         }
-        //Update 
-        public int UpdateExpense(Expense expense)
-        {
-            try
-            {
-                db.Entry(expense).State = EntityState.Modified;
-                db.SaveChanges();
-                return 1;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        //Get by ID  
-        public Expense GetExpenseData(int id)
-        {
-            try
-            {
-                Expense expense = db.Expenses.Find(id);
-                return expense;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        //Delete 
-        public void DeleteExpense(int id)
-        {
-            try
-            {
-                Expense exp = db.Expenses.Find(id);
-                db.Expenses.Remove(exp);
-                db.SaveChanges();
-            }
-            catch
-            {
-                throw;
-            }
-        }
+
     }
 }
