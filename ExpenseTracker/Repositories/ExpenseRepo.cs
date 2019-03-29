@@ -23,5 +23,11 @@ namespace ExpenseTracker.Repositories
             return expenses;
         }
 
+        public IQueryable<Expense> GetExpensesByCategory(string userID, string category)
+        {
+            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == category);
+            return expenses;
+        }
+
     }
 }

@@ -200,7 +200,7 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Food");
+            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Food");
             return View(await expenses.ToListAsync());
         }
 
@@ -211,7 +211,7 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Pleasure");
+            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Pleasure");
             return View(await expenses.ToListAsync());
         }
 
@@ -222,7 +222,7 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Housing");
+            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Housing");
             return View(await expenses.ToListAsync());
         }
 
@@ -233,7 +233,7 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Utilities");
+            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Utilities");
             return View(await expenses.ToListAsync());
         }
     }
