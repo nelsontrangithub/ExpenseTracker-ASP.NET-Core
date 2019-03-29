@@ -178,16 +178,61 @@ namespace ExpenseTracker.Controllers
 
         public IActionResult DeleteAll()
         {
-                        var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.Where(e => e.UserID == userID).ToList();
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var expenses = _context.Expenses.ToList();
             expenses.RemoveAll(e => e.UserID == userID);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
-
+ 
         private bool ExpenseExists(int id)
         {
             return _context.Expenses.Any(e => e.Id == id);
+        }
+
+        // GET: Expenses with category condition
+        public async Task<IActionResult> FoodCategory()
+        {
+            if (User.Identity.Name == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Food");
+            return View(await expenses.ToListAsync());
+        }
+
+        public async Task<IActionResult> PleasureCategory()
+        {
+            if (User.Identity.Name == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Pleasure");
+            return View(await expenses.ToListAsync());
+        }
+
+        public async Task<IActionResult> HousingCategory()
+        {
+            if (User.Identity.Name == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Housing");
+            return View(await expenses.ToListAsync());
+        }
+
+        public async Task<IActionResult> UtilitiesCategory()
+        {
+            if (User.Identity.Name == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == "Utilities");
+            return View(await expenses.ToListAsync());
         }
     }
 }

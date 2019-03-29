@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ExpenseTracker.Models.Expense>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Expenses";
 }
 
 <h2>Index</h2>
@@ -12,6 +12,14 @@
 <p>
     <a asp-action="DeleteAll">Delete All</a>
 </p>
+
+<div class="list-group">
+    <a asp-action="HousingCategory" class="list-group-item list-group-item-action list-group-item-light">Housing Expenses</a>
+    <a asp-action="FoodCategory" class="list-group-item list-group-item-action list-group-item-light">Food Expenses</a>
+    <a asp-action="UtilitiesCategory" class="list-group-item list-group-item-action list-group-item-light">Utilities Expenses</a>
+    <a asp-action="PleasureCategory" class="list-group-item list-group-item-action list-group-item-light">Pleasure Expenses</a>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -31,29 +39,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpenseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
