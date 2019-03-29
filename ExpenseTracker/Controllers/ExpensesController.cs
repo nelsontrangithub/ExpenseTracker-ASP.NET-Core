@@ -177,15 +177,6 @@ namespace ExpenseTracker.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        public IActionResult DeleteAll()
-        {
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = _context.Expenses.ToList();
-            expenses.RemoveAll(e => e.UserID == userID);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
  
         private bool ExpenseExists(int id)
         {
@@ -235,6 +226,13 @@ namespace ExpenseTracker.Controllers
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Utilities");
             return View(await expenses.ToListAsync());
+        }
+
+        public JsonResult GetMonthlyExpense(string category)
+        {
+            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            decimal monthlyExpense = new ExpenseRepo(_context).CalculateMonthlyExpense(category, userID);
+            return new JsonResult(monthlyExpense);
         }
     }
 }
