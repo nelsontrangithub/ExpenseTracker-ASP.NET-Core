@@ -35,10 +35,10 @@ namespace ExpenseTracker.Repositories
             return expenses;
         }
 
-        public decimal CalculateMonthlyExpense(string category, string userID)
+        public decimal CalculateCategoryTotal(string category, string userID)
         {
             decimal catSum = _context.Expenses.Where
-            (cat => cat.Category == category && (cat.ExpenseDate > DateTime.Now.AddMonths(-7)) && cat.UserID == userID)
+            (cat => cat.Category == category && cat.UserID == userID)
             .Select(cat => cat.Amount)
             .Sum();
 

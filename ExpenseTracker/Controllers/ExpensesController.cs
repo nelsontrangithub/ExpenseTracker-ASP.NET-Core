@@ -189,16 +189,11 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ExpenseRepo expRepo = new ExpenseRepo(_context);
             ViewData["Category"] = category;
-            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, category);
+            ViewData["Total"] = expRepo.CalculateCategoryTotal(category, userID).ToString("C");
+            var expenses = expRepo.GetExpensesByCategory(userID, category);
             return View(await expenses.ToListAsync());
-        }
-
-        public JsonResult GetMonthlyExpense(string category)
-        {
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            decimal monthlyExpense = new ExpenseRepo(_context).CalculateMonthlyExpense(category, userID);
-            return new JsonResult(monthlyExpense);
         }
     }
 }
