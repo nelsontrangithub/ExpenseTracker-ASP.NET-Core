@@ -234,12 +234,5 @@ namespace ExpenseTracker.Controllers
             decimal monthlyExpense = new ExpenseRepo(_context).CalculateMonthlyExpense(category, userID);
             return new JsonResult(monthlyExpense);
         }
-
-        public JsonResult GetWeeklyExpense(string category)
-        {
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            decimal weeklyExpense = new ExpenseRepo(_context).CalculateWeeklyExpense(category, userID);
-            return new JsonResult(weeklyExpense);
-        }
     }
 }
