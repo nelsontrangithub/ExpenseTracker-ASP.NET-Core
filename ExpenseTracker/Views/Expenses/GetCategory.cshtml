@@ -1,26 +1,17 @@
 ﻿@model IEnumerable<ExpenseTracker.Models.Expense>
 
 @{
-    ViewData["Title"] = "Expenses";
+    ViewData["Title"] = "GetCategory";
 }
 
-<h2>Expenses</h2>
+<h2>@ViewBag.Category</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-        Select A Category
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li><a asp-action="GetCategory" asp-route-category="Housing" class="list-group-item list-group-item-action list-group-item-light">Housing Expenses</a></li>
-        <li><a asp-action="GetCategory" asp-route-category="Food" class="list-group-item list-group-item-action list-group-item-light">Food Expenses</a></li>
-        <li><a asp-action="GetCategory" asp-route-category="Utilities" class="list-group-item list-group-item-action list-group-item-light">Utilities Expenses</a></li>
-        <li><a asp-action="GetCategory" asp-route-category="Pleasure" class="list-group-item list-group-item-action list-group-item-light">Pleasure Expenses</a></li>
-    </ul>
-</div>
+<p>
+    <a asp-action="GetMonthlyExpense" asp-route-category="@ViewBag.Category" class="btn btn-primary">Monthly Expense Total</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -56,9 +47,6 @@
                     @Html.DisplayFor(modelItem => item.Category)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-                </td>
-                <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -67,3 +55,6 @@
         }
     </tbody>
 </table>
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>

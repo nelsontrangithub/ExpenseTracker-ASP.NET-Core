@@ -23,6 +23,12 @@ namespace ExpenseTracker.Repositories
             return expenses;
         }
 
+        public Expense GetById(int? id)
+        {
+            var expense = _context.Expenses.Include(e => e.ApplicationUser).FirstOrDefault(m => m.Id == id);
+            return expense;
+        }
+
         public IQueryable<Expense> GetExpensesByCategory(string userID, string category)
         {
             var expenses = _context.Expenses.Where(e => e.UserID == userID && e.Category == category);

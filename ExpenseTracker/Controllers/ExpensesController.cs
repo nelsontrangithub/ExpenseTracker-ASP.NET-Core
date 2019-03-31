@@ -29,8 +29,6 @@ namespace ExpenseTracker.Controllers
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            //var expenses = _context.Expenses.Where(e => e.UserID == userID);
-            //return View(await expenses.ToListAsync());
             var expenses = new ExpenseRepo(_context).GetAllExpenses(userID);
             return View(await expenses.ToListAsync());
         }
@@ -50,6 +48,7 @@ namespace ExpenseTracker.Controllers
             var expense = await _context.Expenses
                 .Include(e => e.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (expense == null)
             {
                 return NotFound();
@@ -183,48 +182,15 @@ namespace ExpenseTracker.Controllers
             return _context.Expenses.Any(e => e.Id == id);
         }
 
-        // GET: Expenses with category condition
-        public async Task<IActionResult> FoodCategory()
+        public async Task<IActionResult> GetCategory(string category)
         {
             if (User.Identity.Name == null)
             {
                 return Redirect("/Identity/Account/Login");
             }
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Food");
-            return View(await expenses.ToListAsync());
-        }
-
-        public async Task<IActionResult> PleasureCategory()
-        {
-            if (User.Identity.Name == null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Pleasure");
-            return View(await expenses.ToListAsync());
-        }
-
-        public async Task<IActionResult> HousingCategory()
-        {
-            if (User.Identity.Name == null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Housing");
-            return View(await expenses.ToListAsync());
-        }
-
-        public async Task<IActionResult> UtilitiesCategory()
-        {
-            if (User.Identity.Name == null)
-            {
-                return Redirect("/Identity/Account/Login");
-            }
-            var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, "Utilities");
+            ViewData["Category"] = category;
+            var expenses = new ExpenseRepo(_context).GetExpensesByCategory(userID, category);
             return View(await expenses.ToListAsync());
         }
 
