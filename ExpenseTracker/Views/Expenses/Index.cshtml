@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+@using (Html.BeginForm())
+{
+    <p>
+        Search by name or category: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
         Select A Category
@@ -28,13 +36,13 @@
                 @Html.ActionLink("Expense Name", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
-                @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm})
+                @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm })
             </th>
             <th>
                 @Html.ActionLink("Expense Date", "Index", new { sortOrder = ViewBag.DateSortParm })
             </th>
             <th>
-                @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategorySortParm})
+                @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategorySortParm })
             </th>
             <th></th>
         </tr>

@@ -22,7 +22,7 @@ namespace ExpenseTracker.Controllers
         }
 
         // GET: Expenses
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             if (User.Identity.Name == null)
             {
@@ -33,7 +33,15 @@ namespace ExpenseTracker.Controllers
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var expenses = new ExpenseRepo(_context).GetAllExpenses(userID);
+
+            ExpenseRepo expRepo = new ExpenseRepo(_context);
+
+            var expenses = expRepo.GetAllExpenses(userID);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                expenses = expRepo.GetExpensesBySearch(userID, searchString);
+            }
 
             switch (sortOrder)
             {

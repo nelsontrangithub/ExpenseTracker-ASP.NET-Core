@@ -23,6 +23,13 @@ namespace ExpenseTracker.Repositories
             return expenses;
         }
 
+        public IQueryable<Expense> GetExpensesBySearch(string userID, string searchString)
+        {
+            var expenses = _context.Expenses
+                .Where(e => e.UserID == userID && e.ExpenseName.ToLower().Contains(searchString.ToLower()) || e.UserID == userID && e.Category.ToLower().Contains(searchString.ToLower()));
+            return expenses;
+        }
+
         public Expense GetById(int? id)
         {
             var expense = _context.Expenses.Include(e => e.ApplicationUser).FirstOrDefault(m => m.Id == id);
