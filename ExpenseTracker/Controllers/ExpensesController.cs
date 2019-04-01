@@ -22,7 +22,7 @@ namespace ExpenseTracker.Controllers
         }
 
         // GET: Expenses
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public IActionResult Index(string sortOrder, string searchString, int? page)
         {
             if (User.Identity.Name == null)
             {
@@ -33,6 +33,12 @@ namespace ExpenseTracker.Controllers
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+            string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
+
+            ViewData["CurrentSort"] = sort;
+            ViewData["CurrentFilter"] = search;
+
 
             ExpenseRepo expRepo = new ExpenseRepo(_context);
 
@@ -43,7 +49,9 @@ namespace ExpenseTracker.Controllers
                 expenses = expRepo.GetExpensesBySearch(userID, searchString);
             }
             expenses = expRepo.SortExpenses(expenses, sortOrder);
-            return View(await expenses.ToListAsync());
+            int pageSize = 3;
+            //return View(await expenses.ToListAsync());
+            return View(PaginatedList<Expense>.Create(expenses, page ?? 1, pageSize));
         }
 
         // GET: Expenses/Details/5
