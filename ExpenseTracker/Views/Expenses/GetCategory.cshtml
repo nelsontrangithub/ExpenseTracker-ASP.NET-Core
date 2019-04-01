@@ -5,10 +5,30 @@
 }
 
 <h2 class="text-center">@ViewBag.Category</h2>
-
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        Category
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a asp-action="GetCategory" asp-route-category="Housing" class="list-group-item list-group-item-action list-group-item-light">Housing Expenses</a></li>
+        <li><a asp-action="GetCategory" asp-route-category="Food" class="list-group-item list-group-item-action list-group-item-light">Food Expenses</a></li>
+        <li><a asp-action="GetCategory" asp-route-category="Utilities" class="list-group-item list-group-item-action list-group-item-light">Utilities Expenses</a></li>
+        <li><a asp-action="GetCategory" asp-route-category="Pleasure" class="list-group-item list-group-item-action list-group-item-light">Pleasure Expenses</a></li>
+    </ul>
+</div>
+<form role="search" asp-action="GetCategory" method="get" style="margin : 20px 0px;">
+    <div class="input-group add-on">
+        <input type="hidden" name="category" value="@ViewBag.Category"/>
+        <input class="form-control" name="searchString" placeholder="Search by name..." type="text">
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

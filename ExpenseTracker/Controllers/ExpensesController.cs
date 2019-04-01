@@ -195,7 +195,7 @@ namespace ExpenseTracker.Controllers
             return _context.Expenses.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> GetCategory(string category, string sortOrder)
+        public async Task<IActionResult> GetCategory(string category, string sortOrder, string searchString)
         {
             if (User.Identity.Name == null)
             {
@@ -212,6 +212,10 @@ namespace ExpenseTracker.Controllers
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                expenses = expRepo.SearchExpensesWithCategory(userID, category, searchString);
+            }
             expenses = expRepo.SortExpenses(expenses, sortOrder);
 
             return View(await expenses.ToListAsync());

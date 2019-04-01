@@ -42,6 +42,13 @@ namespace ExpenseTracker.Repositories
             return expenses;
         }
 
+        public IQueryable<Expense> SearchExpensesWithCategory(string userID, string category, string searchString)
+        {
+            var expenses = _context.Expenses
+                .Where(e => e.UserID == userID && e.Category == category && e.ExpenseName.ToLower().Contains(searchString.ToLower()));
+            return expenses;
+        }
+
         public decimal CalculateCategoryTotal(string category, string userID)
         {
             decimal catSum = _context.Expenses.Where
