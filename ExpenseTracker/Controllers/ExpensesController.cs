@@ -222,7 +222,7 @@ namespace ExpenseTracker.Controllers
             return _context.Expenses.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> GetCategory(string category)
+        public async Task<IActionResult> GetCategory(string category, string sortOrder)
         {
             if (User.Identity.Name == null)
             {
@@ -233,6 +233,14 @@ namespace ExpenseTracker.Controllers
             ViewData["Category"] = category;
             ViewData["Total"] = expRepo.CalculateCategoryTotal(category, userID).ToString("C");
             var expenses = expRepo.GetExpensesByCategory(userID, category);
+
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
+            ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
+
+            expenses = expRepo.SortExpenses(expenses, sortOrder);
+
             return View(await expenses.ToListAsync());
         }
     }

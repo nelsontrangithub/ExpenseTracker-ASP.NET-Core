@@ -51,5 +51,37 @@ namespace ExpenseTracker.Repositories
 
             return catSum;
         }
+
+        public IQueryable<Expense> SortExpenses(IQueryable<Expense> expenses, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    expenses = expenses.OrderByDescending(s => s.ExpenseName);
+                    break;
+                case "Date":
+                    expenses = expenses.OrderBy(s => s.ExpenseDate);
+                    break;
+                case "date_desc":
+                    expenses = expenses.OrderByDescending(s => s.ExpenseDate);
+                    break;
+                case "Amount":
+                    expenses = expenses.OrderBy(s => s.Amount);
+                    break;
+                case "amount_desc":
+                    expenses = expenses.OrderByDescending(s => s.Amount);
+                    break;
+                case "Category":
+                    expenses = expenses.OrderBy(s => s.Category);
+                    break;
+                case "category_desc":
+                    expenses = expenses.OrderByDescending(s => s.Category);
+                    break;
+                default:
+                    expenses = expenses.OrderBy(s => s.ExpenseName);
+                    break;
+            }
+            return expenses;
+        }
     }
 }

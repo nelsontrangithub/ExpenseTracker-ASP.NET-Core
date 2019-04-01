@@ -9,17 +9,9 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-@using (Html.BeginForm())
-{
-    <p>
-        Search by name or category: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-}
-
 <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-        Select A Category
+        Category
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
@@ -29,6 +21,13 @@
         <li><a asp-action="GetCategory" asp-route-category="Pleasure" class="list-group-item list-group-item-action list-group-item-light">Pleasure Expenses</a></li>
     </ul>
 </div>
+@using (Html.BeginForm())
+{
+    <p>
+        Search by name or category: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <thead>
         <tr>

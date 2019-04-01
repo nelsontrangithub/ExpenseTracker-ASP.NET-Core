@@ -4,28 +4,25 @@
     ViewData["Title"] = "GetCategory";
 }
 
-<h2>@ViewBag.Category</h2>
+<h2 class="text-center">@ViewBag.Category</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-<p>
-    <a asp-action="GetMonthlyExpense" asp-route-category="@ViewBag.Category" class="btn btn-primary">Monthly Expense Total</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ExpenseName)
+                @Html.ActionLink("Expense Name", "GetCategory", new { category = ViewBag.Category, sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                @Html.ActionLink("Amount", "GetCategory", new { category = ViewBag.Category, sortOrder = ViewBag.AmountSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpenseDate)
+                @Html.ActionLink("Expense Date", "GetCategory", new { category = ViewBag.Category, sortOrder = ViewBag.DateSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.ActionLink("Category", "GetCategory", new { category = ViewBag.Category, sortOrder = ViewBag.CategorySortParm })
             </th>
             <th></th>
         </tr>
