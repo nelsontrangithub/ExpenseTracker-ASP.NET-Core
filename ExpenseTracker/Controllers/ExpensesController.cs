@@ -42,34 +42,7 @@ namespace ExpenseTracker.Controllers
             {
                 expenses = expRepo.GetExpensesBySearch(userID, searchString);
             }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    expenses = expenses.OrderByDescending(s => s.ExpenseName);
-                    break;
-                case "Date":
-                    expenses = expenses.OrderBy(s => s.ExpenseDate);
-                    break;
-                case "date_desc":
-                    expenses = expenses.OrderByDescending(s => s.ExpenseDate);
-                    break;
-                case "Amount":
-                    expenses = expenses.OrderBy(s => s.Amount);
-                    break;
-                case "amount_desc":
-                    expenses = expenses.OrderByDescending(s => s.Amount);
-                    break;
-                case "Category":
-                    expenses = expenses.OrderBy(s => s.Category);
-                    break;
-                case "category_desc":
-                    expenses = expenses.OrderByDescending(s => s.Category);
-                    break;
-                default:
-                    expenses = expenses.OrderBy(s => s.ExpenseName);
-                    break;
-            }
+            expenses = expRepo.SortExpenses(expenses, sortOrder);
             return View(await expenses.ToListAsync());
         }
 

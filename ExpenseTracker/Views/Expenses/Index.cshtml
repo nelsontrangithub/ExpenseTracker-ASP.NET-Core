@@ -21,13 +21,14 @@
         <li><a asp-action="GetCategory" asp-route-category="Pleasure" class="list-group-item list-group-item-action list-group-item-light">Pleasure Expenses</a></li>
     </ul>
 </div>
-@using (Html.BeginForm())
-{
-    <p>
-        Search by name or category: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-}
+<form role="search" asp-action="Index" method="get" style="margin : 20px 0px;">
+    <div class="input-group add-on">
+        <input class="form-control" name="searchString" placeholder="Search by name..." type="text">
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">Search</button>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
