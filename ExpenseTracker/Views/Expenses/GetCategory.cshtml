@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ExpenseTracker.Models.Expense>
+﻿@model PaginatedList<ExpenseTracker.Models.Expense>
 
 @{
     ViewData["Title"] = "GetCategory";
@@ -22,7 +22,7 @@
 </div>
 <form role="search" asp-action="GetCategory" method="get" style="margin : 20px 0px;">
     <div class="input-group add-on">
-        <input type="hidden" name="category" value="@ViewBag.Category"/>
+        <input type="hidden" name="category" value="@ViewBag.Category" />
         <input class="form-control" name="searchString" placeholder="Search by name..." type="text">
         <div class="input-group-btn">
             <button class="btn btn-default" type="submit">Search</button>
@@ -78,3 +78,24 @@
 <p>
     <a asp-action="Index">Back to List</a>
 </p>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="GetCategory"
+   asp-route-category="@ViewBag.Category"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-searchString="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="GetCategory"
+   asp-route-category="@ViewBag.Category"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-searchString="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

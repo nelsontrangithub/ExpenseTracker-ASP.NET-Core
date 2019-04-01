@@ -35,10 +35,8 @@ namespace ExpenseTracker.Controllers
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
             string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
-
             ViewData["CurrentSort"] = sort;
             ViewData["CurrentFilter"] = search;
-
 
             ExpenseRepo expRepo = new ExpenseRepo(_context);
 
@@ -203,7 +201,7 @@ namespace ExpenseTracker.Controllers
             return _context.Expenses.Any(e => e.Id == id);
         }
 
-        public async Task<IActionResult> GetCategory(string category, string sortOrder, string searchString)
+        public IActionResult GetCategory(string category, string sortOrder, string searchString, int? page)
         {
             if (User.Identity.Name == null)
             {
@@ -219,14 +217,18 @@ namespace ExpenseTracker.Controllers
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
             ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
+            string sort = String.IsNullOrEmpty(sortOrder) ? "title_asc" : sortOrder;
+            string search = String.IsNullOrEmpty(searchString) ? "" : searchString;
+            ViewData["CurrentSort"] = sort;
+            ViewData["CurrentFilter"] = search;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 expenses = expRepo.SearchExpensesWithCategory(userID, category, searchString);
             }
             expenses = expRepo.SortExpenses(expenses, sortOrder);
-
-            return View(await expenses.ToListAsync());
+            int pageSize = 3;
+            return View(PaginatedList<Expense>.Create(expenses, page ?? 1, pageSize));
         }
     }
 }
