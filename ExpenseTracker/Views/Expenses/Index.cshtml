@@ -25,16 +25,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ExpenseName)
+                @Html.ActionLink("Expense Name", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm})
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpenseDate)
+                @Html.ActionLink("Expense Date", "Index", new { sortOrder = ViewBag.DateSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.CategorySortParm})
             </th>
             <th></th>
         </tr>

@@ -22,14 +22,46 @@ namespace ExpenseTracker.Controllers
         }
 
         // GET: Expenses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
             if (User.Identity.Name == null)
             {
                 return Redirect("/Identity/Account/Login");
             }
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewBag.AmountSortParm = sortOrder == "Amount" ? "amount_desc" : "Amount";
+            ViewBag.CategorySortParm = sortOrder == "Category" ? "category_desc" : "Category";
             var userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var expenses = new ExpenseRepo(_context).GetAllExpenses(userID);
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    expenses = expenses.OrderByDescending(s => s.ExpenseName);
+                    break;
+                case "Date":
+                    expenses = expenses.OrderBy(s => s.ExpenseDate);
+                    break;
+                case "date_desc":
+                    expenses = expenses.OrderByDescending(s => s.ExpenseDate);
+                    break;
+                case "Amount":
+                    expenses = expenses.OrderBy(s => s.Amount);
+                    break;
+                case "amount_desc":
+                    expenses = expenses.OrderByDescending(s => s.Amount);
+                    break;
+                case "Category":
+                    expenses = expenses.OrderBy(s => s.Category);
+                    break;
+                case "category_desc":
+                    expenses = expenses.OrderByDescending(s => s.Category);
+                    break;
+                default:
+                    expenses = expenses.OrderBy(s => s.ExpenseName);
+                    break;
+            }
             return View(await expenses.ToListAsync());
         }
 
