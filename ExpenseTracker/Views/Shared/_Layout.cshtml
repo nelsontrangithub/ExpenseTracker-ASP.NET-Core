@@ -33,14 +33,12 @@
                     <li><a asp-area="" asp-controller="Expenses" asp-action="Index">Expenses</a></li>
                     @if (User.IsInRole("Admin"))
                     {
-                        <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>
-                            <a asp-area="" asp-controller="UserRole" asp-action="Index">
-                                Users
-                            </a>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+                                <li><a asp-area="" asp-controller="UserRole" asp-action="Index">Users</a></li>
+                            </ul>
                         </li>
                     }
                 </ul>
