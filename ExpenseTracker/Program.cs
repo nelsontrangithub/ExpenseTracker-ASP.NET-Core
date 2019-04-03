@@ -25,7 +25,8 @@ namespace ExpenseTracker
                     var serviceProvider = services.GetRequiredService<IServiceProvider>();
                     var configuration = services.GetRequiredService<IConfiguration>();
                     Seed.CreateRoles(serviceProvider, configuration).Wait();
-
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception exception)
                 {
