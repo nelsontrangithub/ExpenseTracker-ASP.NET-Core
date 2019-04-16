@@ -59,6 +59,16 @@ namespace ExpenseTracker.Repositories
             return catSum;
         }
 
+        public decimal CalculateWeeklyTotal(string category, string userID)
+        {
+            decimal total = _context.Expenses.Where
+                (cat => cat.Category == category && cat.UserID == userID && cat.ExpenseDate > DateTime.Now.AddDays(7))
+                .Select(cat => cat.Amount)
+                .Sum();
+
+            return total;
+        }
+
         public IQueryable<Expense> SortExpenses(IQueryable<Expense> expenses, string sortOrder)
         {
             switch (sortOrder)

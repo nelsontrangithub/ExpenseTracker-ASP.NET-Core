@@ -211,6 +211,7 @@ namespace ExpenseTracker.Controllers
             ExpenseRepo expRepo = new ExpenseRepo(_context);
             ViewData["Category"] = category;
             ViewData["Total"] = expRepo.CalculateCategoryTotal(category, userID).ToString("C");
+            ViewData["WeeklyTotal"] = expRepo.CalculateWeeklyTotal(category, userID).ToString("C");
             var expenses = expRepo.GetExpensesByCategory(userID, category);
 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
