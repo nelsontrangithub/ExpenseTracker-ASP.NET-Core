@@ -62,7 +62,7 @@ namespace ExpenseTracker.Repositories
         public decimal CalculateWeeklyTotal(string category, string userID)
         {
             decimal total = _context.Expenses.Where
-                (cat => cat.Category == category && cat.UserID == userID && cat.ExpenseDate > DateTime.Now.AddDays(7))
+                (cat => cat.Category == category && cat.UserID == userID && cat.ExpenseDate >= DateTime.Now.AddDays(-7))
                 .Select(cat => cat.Amount)
                 .Sum();
 
